@@ -1,16 +1,10 @@
-export default class Entity {
-    static nextId = 1;
+import Entity from "./Entity";
 
+export default class Food extends Entity {
     constructor(x, y) {
-        this.id = Entity.nextId++;
-        this.x = x;
-        this.y = y;
-        this.radius = 5;
-    }
-
-    distanceTo(e) {
-        const dx = this.x - e.x;
-        const dy = this.y - e.y;
-        return Math.sqrt(dx * dx + dy * dy);
+        super(x, y);
+        this.energy = 40;
+        this.radius = 3;
+        this.color = "#22c55e";
     }
 }

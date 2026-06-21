@@ -5,15 +5,15 @@ import Herbivore from "./Herbivore";
 export default class Carnivore extends Organism {
 
     constructor(x, y, genome = new Genome({
-        speed: 3,
+        speed: 2.8,
         vision: 120,
-        fertility: 200,
-        efficiency: 1.2
+        fertility: 190,
+        efficiency: 1.1
     })) {
         super(x, y, genome);
 
         this.color = "#ef4444";
-        this.radius = 6 + genome.speed * 0.3;
+        this.radius = 6 + genome.speed * 0.25;
     }
 
     update(world) {
@@ -23,7 +23,9 @@ export default class Carnivore extends Organism {
         this.updateBase();
 
         const prey = this.findClosest(
-            world.organisms.filter(o => o instanceof Herbivore && o.alive)
+            world.organisms.filter(o =>
+                o instanceof Herbivore && o.alive
+            )
         );
 
         this.target = prey;
@@ -38,14 +40,17 @@ export default class Carnivore extends Organism {
 
                 this.energy = Math.min(
                     this.maxEnergy,
-                    this.energy + 80
+                    this.energy + 30
                 );
             }
+
         } else {
             this.direction += (Math.random() - 0.5) * 0.25;
         }
 
         this.move(world);
+
+        this.energy -= 0.01;
 
         if (this.energy > this.genome.fertility) {
 

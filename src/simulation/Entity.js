@@ -2,9 +2,12 @@ export default class Entity {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        this.radius = 5;
     }
 
-    distanceTo(other) {
-        return Math.hypot(this.x - other.x, this.y - other.y);
+    distanceTo(e) {
+        const dx = this.x - e.x;
+        const dy = this.y - e.y;
+        return Math.sqrt(dx * dx + dy * dy);
     }
 }

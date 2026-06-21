@@ -9,7 +9,7 @@ export default class CanvasRenderer {
 
         const ctx = this.ctx;
 
-        ctx.clearRect(0, 0, 1200, 800);
+        ctx.clearRect(0, 0, 1000, 700);
 
         this.drawFood();
         this.drawOrganisms();
@@ -31,15 +31,16 @@ export default class CanvasRenderer {
         for (const o of this.world.organisms) {
 
             this.ctx.fillStyle = o.color;
+
             this.ctx.beginPath();
             this.ctx.arc(o.x, o.y, o.radius, 0, Math.PI * 2);
             this.ctx.fill();
 
-            // energy bar
+            // energy
             this.ctx.fillStyle = "#22c55e";
             this.ctx.fillRect(o.x - 10, o.y - 12, 20 * (o.energy / o.maxEnergy), 3);
 
-            // age bar
+            // age
             this.ctx.fillStyle = "#f59e0b";
             this.ctx.fillRect(o.x - 10, o.y - 8, 20 * (o.age / o.maxAge), 3);
 
@@ -49,7 +50,6 @@ export default class CanvasRenderer {
             this.ctx.arc(o.x, o.y, o.genome.vision, 0, Math.PI * 2);
             this.ctx.stroke();
 
-            // target line
             if (o.target) {
                 this.ctx.strokeStyle = "rgba(255,255,255,0.15)";
                 this.ctx.beginPath();
@@ -71,5 +71,6 @@ export default class CanvasRenderer {
         this.ctx.fillText(`Carnivores: ${s.carnivores}`, 10, 40);
         this.ctx.fillText(`Food: ${s.foods}`, 10, 60);
         this.ctx.fillText(`Total: ${s.total}`, 10, 80);
+        this.ctx.fillText(`Time: ${s.time}`, 10, 100);
     }
 }

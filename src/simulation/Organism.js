@@ -7,11 +7,11 @@ export default class Organism extends Entity {
 
         this.genome = genome;
 
-        this.energy = 100;
-        this.maxEnergy = 250;
+        this.energy = 90;
+        this.maxEnergy = 220;
 
         this.age = 0;
-        this.maxAge = 2500;
+        this.maxAge = 2200;
 
         this.alive = true;
 
@@ -27,10 +27,9 @@ export default class Organism extends Entity {
     }
 
     updateBase() {
-
         this.age++;
 
-        this.energy -= 0.02 * this.genome.efficiency;
+        this.energy -= 0.015 * this.genome.efficiency;
 
         if (this.energy <= 0 || this.age > this.maxAge) {
             this.kill();
@@ -38,15 +37,14 @@ export default class Organism extends Entity {
     }
 
     move(world) {
-
         this.x += Math.cos(this.direction) * this.genome.speed;
         this.y += Math.sin(this.direction) * this.genome.speed;
 
-        if (this.x < 0) this.direction = Math.PI - this.direction;
-        if (this.x > world.width) this.direction = Math.PI - this.direction;
+        if (this.x < 0 || this.x > world.width)
+            this.direction = Math.PI - this.direction;
 
-        if (this.y < 0) this.direction = -this.direction;
-        if (this.y > world.height) this.direction = -this.direction;
+        if (this.y < 0 || this.y > world.height)
+            this.direction = -this.direction;
     }
 
     seek(target) {
@@ -57,17 +55,14 @@ export default class Organism extends Entity {
     }
 
     findClosest(list) {
-
         let best = null;
-        let bestDist = Infinity;
+        let dist = Infinity;
 
         for (const item of list) {
-
             const d = this.distanceTo(item);
-
-            if (d < this.genome.vision && d < bestDist) {
+            if (d < this.genome.vision && d < dist) {
                 best = item;
-                bestDist = d;
+                dist = d;
             }
         }
 

@@ -7,7 +7,7 @@ export default class Herbivore extends Organism {
         super(x, y, genome);
 
         this.color = "#3b82f6";
-        this.radius = 5 + genome.speed * 0.5;
+        this.radius = 5 + genome.speed * 0.3;
     }
 
     update(world) {
@@ -33,6 +33,7 @@ export default class Herbivore extends Organism {
 
                 world.removeFood(food);
             }
+
         } else {
             this.direction += (Math.random() - 0.5) * 0.2;
         }
@@ -41,7 +42,7 @@ export default class Herbivore extends Organism {
 
         if (this.energy > this.genome.fertility) {
 
-            this.energy *= 0.6;
+            this.energy *= 0.5;
 
             const child = new Herbivore(
                 this.x,

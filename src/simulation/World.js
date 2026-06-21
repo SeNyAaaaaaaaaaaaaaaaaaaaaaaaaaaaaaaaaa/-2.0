@@ -12,25 +12,26 @@ export default class World {
         this.foods = [];
 
         this.tick = 0;
+        this.time = 0;
     }
 
     initialize() {
 
-        for (let i = 0; i < 80; i++) {
+        for (let i = 0; i < 90; i++) {
             this.foods.push(new Food(
                 Math.random() * this.width,
                 Math.random() * this.height
             ));
         }
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 25; i++) {
             this.organisms.push(new Herbivore(
                 Math.random() * this.width,
                 Math.random() * this.height
             ));
         }
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 6; i++) {
             this.organisms.push(new Carnivore(
                 Math.random() * this.width,
                 Math.random() * this.height
@@ -47,7 +48,9 @@ export default class World {
     }
 
     spawnFood() {
-        if (this.foods.length < 150) {
+        const amount = this.foods.length < 120 ? 2 : 1;
+
+        for (let i = 0; i < amount; i++) {
             this.foods.push(new Food(
                 Math.random() * this.width,
                 Math.random() * this.height
@@ -58,6 +61,7 @@ export default class World {
     update() {
 
         this.tick++;
+        this.time++;
 
         this.spawnFood();
 
@@ -69,15 +73,12 @@ export default class World {
     }
 
     getStats() {
-
-        const h = this.organisms.filter(o => o instanceof Herbivore).length;
-        const c = this.organisms.filter(o => o instanceof Carnivore).length;
-
         return {
-            herbivores: h,
-            carnivores: c,
+            herbivores: this.organisms.filter(o => o instanceof Herbivore).length,
+            carnivores: this.organisms.filter(o => o instanceof Carnivore).length,
             foods: this.foods.length,
-            total: this.organisms.length
+            total: this.organisms.length,
+            time: this.time
         };
     }
 }
